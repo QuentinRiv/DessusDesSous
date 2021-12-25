@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect, make_respo
 from settings import *
 
 app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
 
@@ -71,6 +72,11 @@ def dashboard_with_stuff():
         deps.append(dep)
     print(deps)
     return render_template("dashboard_with_stuff.html", depenses=deps)
+    
+    
+@app.route("/essai")
+def essai():
+    return "Hello"
     
 if __name__ == "__main__":
     app.run(debug=True)
