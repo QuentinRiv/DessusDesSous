@@ -1,3 +1,4 @@
+from flask import Flask
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, url_for, request, redirect, make_response      
@@ -23,6 +24,7 @@ class Transaction(db.Model):
     def __init__(self, amount, created_on, updated_on, comment=None):
         self.amount = amount
 
+
         self.comment = comment
         self.created_on = created_on,
         self.updated_on = updated_on,
@@ -42,6 +44,10 @@ app = init_app()
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/index")
+def index():
+    return render_template("index.html")
     
 @app.route("/explain")
 def about():
