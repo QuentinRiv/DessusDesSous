@@ -4,18 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mountain Travel</title>
+<<<<<<< Updated upstream:templates/home.html
 
   <link rel="stylesheet" href="/static/css/style_login.css" />
+=======
+  <link rel="stylesheet" href="{{ url_for('login_bp.static', filename='css/style_login.css') }}">
+>>>>>>> Stashed changes:appli/login/templates/home.html
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="{{ url_for('login_bp.static', filename='js/script.js') }}"></script>
+
 
 </head>
 <body>
 
   <div class="cd-popup z-50 fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center" role="alert">
     <div class="cd-popup-container">
-        <!-- <form method="POST" action="/db_page"> -->
+      <form method="POST" action="/login">
            <h2 class="title"> Log in to your account</h2>
            <br>
 
@@ -44,10 +51,10 @@
   <header>
 
 
-    <h2 id = brand_header class="darker">    <img src="/static/images/budget2.svg" alt="Elona" width="50em"> <a href="#">   BudgetEase</a></h2>
+    <h2 id = brand_header class="darker">    <img src="budget2.svg" alt="Elona" width="50em"> <a href="#">   BudgetEase</a></h2>
 
     <nav>
-        <li><class= href="#"class="darker cd-popup-trigger">Login</class=></li>
+        <li><a class="darker cd-popup-trigger">Login</a></li>
 
         <li><a href="#">About</a></li>
         <li><a href="#">Blog</a></li>
