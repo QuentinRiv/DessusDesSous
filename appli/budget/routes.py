@@ -1,13 +1,8 @@
-from flask import Flask
 from flask.templating import render_template
-from flask import Flask, render_template, url_for, request, redirect, make_response
-from flask import jsonify, flash
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import SQLAlchemyError
-from flask import request
-from flask import flash, Blueprint
+from flask import render_template, url_for, request, redirect
+from flask import request, Blueprint
 from flask import current_app as app
-from .models import db, User, Transaction
+from .models import db, Transaction
 
 
 # Partie lié au budget
@@ -70,4 +65,4 @@ def reset_db():
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
-    return "T'es perdu"
+    return render_template("lost.html")

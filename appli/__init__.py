@@ -13,6 +13,9 @@ db = SQLAlchemy()
 def init_app():
     app = Flask(__name__, instance_relative_config=False, static_folder=None)
     app.config.from_pyfile('settings.py')
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SESSION_PERMANENT']= False
+    app.config['SECRET_KEY'] = "<some key>"
     # CORS(app, supports_credentials=True)
 
     db.init_app(app)

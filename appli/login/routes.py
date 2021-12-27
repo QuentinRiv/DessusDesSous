@@ -1,12 +1,7 @@
-
-import requests
-from numpy import random
-from functools import wraps
 from flask import render_template, url_for, request, redirect
 from flask import flash, Blueprint
 
-from flask_login import LoginManager, login_required
-from flask_login import login_user, logout_user, current_user
+from flask_login import LoginManager, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask import current_app as app
@@ -98,7 +93,7 @@ def login_post():
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
         # if the user doesn't exist or password is wrong, reload the page
-        return redirect(url_for('login_bp.login'))
+        return redirect(url_for('login_bp.home'))
 
     # if the above check passes, then we know
     # the user has the right credentials

@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from appli import db
-
+from time import time
 
 # Contient les Tables
 # Puis les classes si on en fait
