@@ -107,7 +107,7 @@ def login_post():
 # Pour créer un compte
 @login_bp.route('/signup')
 def signup():
-    return render_template('signup.html')
+    return render_template('home.html')
 
 
 # Création du nouveau User
@@ -133,7 +133,7 @@ def signup_post():
 
 @login_bp.route("/login")
 def home():
-    return render_template("home.html")
+    return render_template("dashboard.html")
 
 
 @login_bp.route("/")
