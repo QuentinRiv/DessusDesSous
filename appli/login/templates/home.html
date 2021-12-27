@@ -16,33 +16,68 @@
 </head>
 
 <body>
-
+  <!-- Popup window to sign in / sign up -->
   <div class="cd-popup z-50 fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
     role="alert">
     <div class="cd-popup-container">
-      <form method="POST" action="/login">
-        <h2 class="title"> Log in to your account</h2>
-        <br>
+      <!-- Sign in -->
+      <div class="signIn">
+        <form method="POST" action="/login">
+          <h2 class="title"> Log in to your account</h2>
+          <br>
 
-        <div class="email-login">
+          <div class="email-login">
+            <label class="form_row" for="email"> <b>Email</b></label>
+            <br>
+            <input class="form_row user-input" type="email" name="email" placeholder="Your Email" autofocus="">
+            <br>
+            <label for="psw"><b>Password</b></label>
+            <br>
+            <input class="user-input" type="password" name="password" placeholder="Your Password">
+          </div>
+          <br>
+          <button class="btn cta-btn">Log In</button>
+          <br>
+          <br>
+          <a class="forget-pass" href="#">Forgot password?</a>
+          <br>
+          <p class="subtitle">Don't have an account? <a class="btn-back" href="#"> Sign Up</a></p>
+      </div>
+      <!--  -->
+
+
+      <!-- Sign up -->
+      <div class="signUp hide">
+        <form method="POST" action="/signup">
+          <h2 class="title"> Create your new account</h2>
+          <br>
+          <br>
+
+          <label class="form_row" for="email"> <b>Username</b></label>
+          <br>
+          <input class="form_row user-input" type="username" name="username" placeholder="Username" autofocus="">
+          <br>
+
           <label class="form_row" for="email"> <b>Email</b></label>
           <br>
-          <input class="form_row user-input" type="email" name="email" placeholder="Your Email" autofocus="">
+          <input class="form_row user-input" type="email" name="email" placeholder="Email" autofocus="">
           <br>
-          <label for="psw"><b>Password</b></label>
-          <br>
-          <input class="user-input" type="password" name="password" placeholder="Your Password">
-        </div>
-        <br>
-        <button class="btn cta-btn">Log In</button>
-        <br>
-        <br>
-        <a class="forget-pass" href="#">Forgot password?</a>
-        <br>
-        <p class="subtitle">Don't have an account? <a href="#"> Sign Up</a></p>
 
+          <label class="form_row" for="email"> <b>Password</b></label>
+          <br>
+          <input class="form_row user-input" type="password" name="password" placeholder="Password" autofocus="">
+          <br>
+
+          <br>
+          <button class="btn cta-btn">Sign up</button>
+          <br>
+          <br>
+          <a class="alreayHaveAccount" href="#">Already have an account?</a> <a class="btn-member" href="">Log in</a>
+      </div> <!-- cd-popup-container -->
     </div>
   </div> <!-- cd-popup-container -->
+  </div>
+
   </div>
 
   <!-- Forked from a template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->

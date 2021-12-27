@@ -134,3 +134,8 @@ def signup_post():
 @login_bp.route("/login")
 def home():
     return render_template("home.html")
+
+
+@login_bp.route("/")
+def init():
+    return render_template("home.html")
