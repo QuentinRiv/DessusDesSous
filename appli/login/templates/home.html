@@ -11,6 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script src="{{ url_for('login_bp.static', filename='js/login.js') }}"></script>
+  <!-- <script src="{{ url_for('login_bp.static', filename='js/popupAlternate.js') }}"></script> -->
 
 
 </head>
@@ -21,7 +22,7 @@
     role="alert">
     <div class="cd-popup-container">
       <!-- Sign in -->
-      <div class="signIn">
+      <div class="signInSect">
         <form method="POST" action="/login">
           <h2 class="title"> Log in to your account</h2>
           <br>
@@ -41,13 +42,13 @@
           <br>
           <a class="forget-pass" href="#">Forgot password?</a>
           <br>
-          <p class="subtitle">Don't have an account? <a class="btn-back" href="#"> Sign Up</a></p>
+          <p class="subtitle">Don't have an account? <a class="btn-signup"> Sign Up</a></p>
       </div>
       <!--  -->
 
 
       <!-- Sign up -->
-      <div class="signUp hide">
+      <div class="signUpSect hide">
         <form method="POST" action="/signup">
           <h2 class="title"> Create your new account</h2>
           <br>
@@ -72,7 +73,7 @@
           <button class="btn cta-btn">Sign up</button>
           <br>
           <br>
-          <a class="alreayHaveAccount" href="#">Already have an account?</a> <a class="btn-member" href="">Log in</a>
+          <a class="alreayHaveAccount" href="#">Already have an account?</a> <a class="btn-signin">Sign in</a>
       </div> <!-- cd-popup-container -->
     </div>
   </div> <!-- cd-popup-container -->
