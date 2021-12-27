@@ -7,6 +7,7 @@ from time import time
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(50), nullable=False)
@@ -27,7 +28,8 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % self.username
 
-class Category(db.Model, UserMixin):
+class Category(db.Model):
+    __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), nullable=False)
@@ -53,8 +55,7 @@ class Category(db.Model, UserMixin):
 
 class Transaction(db.Model):
     __tablename__ = 'transaction'
-    id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(50))
+    transaction_id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
     transaction_type = db.Column(db.String(50))
     comment = db.Column(db.String(50))
@@ -66,9 +67,8 @@ class Transaction(db.Model):
     date = db.Column(db.String(50))
     category = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, id, category_name, amount, transaction_type, comment, origin_category_id, destination_category_id, category, date):
-        self.id = id
-        self.category_name = category_name
+    def __init__(self, transaction_id, amount, transaction_type, comment, origin_category_id, destination_category_id, date):
+        self.id = transaction_id
         self.amount = amount
         self.date = date
         self.comment = comment
