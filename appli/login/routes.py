@@ -101,7 +101,7 @@ def login_post():
     # r = requests.post('/login', auth=(email, password))
     # user.token = r.json()['token']
     db.session.commit()
-    return redirect(url_for('budget_bp.budget'))
+    return redirect(url_for('budget_bp.dashboard'))
 
 
 # Pour créer un compte
