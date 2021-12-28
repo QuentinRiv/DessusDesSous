@@ -278,11 +278,17 @@ td {
   background-color: white;
   min-height: 5em;
 }
-.app-header-center {
+.app-header-left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   text-align: center;
+  flex-direction: row;
+}
+
+.pig-emoji {
+  display: block;
+  size: 100%;
 }
 
 .app-header-center h2 {
@@ -293,7 +299,7 @@ td {
 .app-header-right {
   display: -webkit-box;
   display: -ms-flexbox;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 
 .app-header-left {
