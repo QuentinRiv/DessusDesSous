@@ -87,7 +87,14 @@ a {
   -ms-flex-direction: column;
   flex-direction: column;
   max-height: 5fr;
-  flex-direction: column;
+}
+
+.explanation-part {
+  flex: 70%;
+}
+
+.illustration-part {
+  flex: 30%;
 }
 
 .table-section {
@@ -574,12 +581,15 @@ td {
   max-width: 70%;
 }
 
-.illustration-container {
-  max-width: 30%;
+.illustration-part img {
+  padding: 2em;
+  max-width: 50%;
 }
 
-.illustration-container img {
-  max-height: 30%;
+.round {
+  max-width: 35px;
+  padding: 5px;
+  align: center;
 }
 
 .projects-section p {
