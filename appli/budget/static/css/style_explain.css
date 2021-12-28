@@ -589,6 +589,7 @@ td {
 .paragraph {
   flex: 25%;
   min-width: 200px;
+  padding: 15px;
 }
 
 .illustration.section img {
