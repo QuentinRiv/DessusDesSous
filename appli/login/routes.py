@@ -55,11 +55,11 @@ def fill_db(name, email=None, password=None):
     # create a new user with the form data.
     # Hash the password so the plaintext version isn't saved.
     new_user = User(email=email,
-                    name=name,
+                    username=name,
                     password=generate_password_hash(
                         password, method='sha256'))
 
-    add_db(new_user, "User {}".format(new_user.name))
+    add_db(new_user, "User {}".format(new_user.username))
 
     return 0
 
@@ -114,7 +114,7 @@ def signup():
 @login_bp.route('/signup', methods=['POST'])
 def signup_post():
     email = request.form.get('email')
-    username = request.form.get('name')
+    username = request.form.get('username')
     password = request.form.get('password')
 
     # if this returns a user, then the email already exists in database
@@ -126,14 +126,16 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('login_bp.signup'))
 
+    print("Mail : ", email, " - User : ", username, " - Pasword :", password)
+
     fill_db(username, email, password)
 
-    return redirect(url_for('login_bp.login'))
+    return redirect(url_for('login_bp.home'))
 
 
 @login_bp.route("/login")
 def home():
-    return render_template("dashboard.html")
+    return render_template("home.html")
 
 
 @login_bp.route("/")
