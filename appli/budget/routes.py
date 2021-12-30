@@ -1,9 +1,9 @@
 from flask.templating import render_template
 from flask import render_template, url_for, request, redirect
-from flask import request, Blueprint
+from flask import request, Blueprint, jsonify
 from flask import current_app as app
 from .models import db, Transaction
-
+from collections import defaultdict  # available in Python 2.5 and newer
 
 # Partie lié au budget
 # Modifies-y comme tu le sens
@@ -29,28 +29,26 @@ def about():
 def dashboard():
     return render_template("dashboard.html")
 
-@budget_bp.route("/addentry", methods=["POST"])
+@budget_bp.route("/add_money", methods=["POST"])
 def truc():
-    print(request.form)
-    valeur = request.form
+    req = request.get_json()
+    print(req)
     newdep = Transaction(
-        valeur['montant'], 'all good', 'all good')
+        req['amount'], req['category'], req['comment'])
     db.session.add(newdep)
     db.session.commit()
-    return redirect(url_for('budget_bp.seedb'))
+    return {"Answer " : "Alright"}, 200
 
+@budget_bp.route("/getdata")
+def getdata():
+    trans_d = defaultdict(int)
+    transactions = Transaction.query.all()
+    for transaction in transactions:
+        trans_d[transaction.category] += transaction.amount
 
-@budget_bp.route("/dashboard_with_stuff")
-def dashboard_with_stuff():
-    depenses = Transaction.query.all()
-    deps = []
-    for depense in depenses:
-        print("Amount = " + str(depense.amount))
-        dep = {"amount": depense.amount}
-        deps.append(dep)
-    print(deps)
-    return render_template("dashboard_with_stuff.html", depenses=deps)
-    
+    print("\n----Dico :", trans_d)
+
+    return jsonify(trans_d)
     
 @budget_bp.route("/essai")
 def essai():
@@ -61,6 +59,7 @@ def reset_db():
     db.drop_all()
     db.create_all()
     return "Database reset"
+
 
 @app.errorhandler(404)
 def page_not_found(e):

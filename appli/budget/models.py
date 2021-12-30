@@ -55,10 +55,9 @@ class Category(db.Model):
 
 
 class Transaction(db.Model):
-    __tablename__ = 'transaction'
-    transaction_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
-    transaction_type = db.Column(db.String(50))
+    category = db.Column(db.String(50))
     comment = db.Column(db.String(50))
     origin_category_id = db.Column(db.String(50))
     destination_category_id = db.Column(db.String(50))
@@ -66,16 +65,14 @@ class Transaction(db.Model):
     # category = user_id = db.Column(db.Integer, db.ForeignKey('list.category_id'),
     #                                nullable=False)
     date = db.Column(db.String(50))
-    category = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, transaction_id, amount, transaction_type, comment, origin_category_id, destination_category_id, date):
-        self.id = transaction_id
+    def __init__(self, amount, category, comment, origin_category_id=None, destination_category_id=None, date=None):
         self.amount = amount
         self.date = date
         self.comment = comment
-        self.transaction_type = transaction_type
+        self.category = category
         self.origin_category_id = origin_category_id
         self.destination_category_id = destination_category_id
 
     def __repr__(self):
-        return '<Transaction %r>' % self.category_name
+        return '<Transaction %r>' % self.category
