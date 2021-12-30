@@ -29,7 +29,6 @@ def about():
 @login_required
 @budget_bp.route("/dashboard")
 def dashboard():
-    print("***", current_user.username)
     return render_template("dashboard.html")
 
 @budget_bp.route("/add_money", methods=["POST"])

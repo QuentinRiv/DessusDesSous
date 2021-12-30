@@ -288,7 +288,7 @@
 <SCRIPT language="JavaScript">
 
 
-  function post_spending() {
+  function adding_money() {
       var category = $("#add_category").val();
       console.log(category);
       var amount = $("#add_amount").val();
@@ -311,6 +311,8 @@
               "content-type": "application/json"
           })
       })
+      .then(function (res) { return res.json(); })
+      .then(function (data) { alert(JSON.stringify(data)) })
   }
   
   </SCRIPT>
@@ -381,7 +383,7 @@
 
         <div class="side-content-row">
           <div class = "center">
-            <button class="btn" onClick="post_spending()">Send</button>
+            <button class="btn" onClick="adding_money()">Send</button>
           </div>
         </div>
       <!-- </form> -->
