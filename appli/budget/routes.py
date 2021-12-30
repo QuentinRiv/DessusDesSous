@@ -4,6 +4,7 @@ from flask import request, Blueprint, jsonify
 from flask import current_app as app
 from .models import db, Transaction
 from collections import defaultdict  # available in Python 2.5 and newer
+from flask_login import login_required, current_user
 
 # Partie lié au budget
 # Modifies-y comme tu le sens
@@ -25,8 +26,10 @@ budget_bp = Blueprint('budget_bp', __name__,
 def about():
     return render_template("explain.html")
 
+@login_required
 @budget_bp.route("/dashboard")
 def dashboard():
+    print("***", current_user.username)
     return render_template("dashboard.html")
 
 @budget_bp.route("/add_money", methods=["POST"])
@@ -56,6 +59,7 @@ def essai():
 
 @budget_bp.route("/reset_db")
 def reset_db():
+    app.app_context().push()
     db.drop_all()
     db.create_all()
     return "Database reset"

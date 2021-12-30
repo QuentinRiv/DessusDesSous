@@ -61,9 +61,6 @@ class Transaction(db.Model):
     comment = db.Column(db.String(50))
     origin_category_id = db.Column(db.String(50))
     destination_category_id = db.Column(db.String(50))
-
-    # category = user_id = db.Column(db.Integer, db.ForeignKey('list.category_id'),
-    #                                nullable=False)
     date = db.Column(db.String(50))
 
     def __init__(self, amount, category, comment, origin_category_id=None, destination_category_id=None, date=None):
