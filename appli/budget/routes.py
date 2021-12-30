@@ -2,7 +2,7 @@ from flask.templating import render_template
 from flask import render_template, url_for, request, redirect
 from flask import request, Blueprint, jsonify
 from flask import current_app as app
-from .models import db, Transaction
+from .models import db, Transaction, User
 from collections import defaultdict  # available in Python 2.5 and newer
 from flask_login import login_required, current_user
 
@@ -59,9 +59,11 @@ def essai():
 
 @budget_bp.route("/reset_db")
 def reset_db():
-    app.app_context().push()
-    db.drop_all()
-    db.create_all()
+    # app.app_context().push()
+    # db.drop_all()
+    # db.create_all()
+    from sqlalchemy import engine
+    User.__table__.drop(engine)
     return "Database reset"
 
 
