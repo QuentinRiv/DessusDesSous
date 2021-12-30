@@ -55,15 +55,19 @@ def getdata():
     
 @budget_bp.route("/essai")
 def essai():
-    return "Hello"
+    columns = User.__table__.columns
+    users = User.query.all()
+    every = ""
+    for user in users:
+        print(user.__unicode__())
+        every += user.__unicode__()
+    return every
 
 @budget_bp.route("/reset_db")
 def reset_db():
-    # app.app_context().push()
-    # db.drop_all()
-    # db.create_all()
-    from sqlalchemy import engine
-    User.__table__.drop(engine)
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
     return "Database reset"
 
 
