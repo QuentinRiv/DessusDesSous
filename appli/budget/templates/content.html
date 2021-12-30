@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>HTML Table</h2>
+
+{% for table in all %}
+<table>
+  <tr>
+    {% for element in table %}
+        {% for key in element %}
+            <th>{{key}}</th>
+        {% endfor %}
+    {% endfor %}
+  </tr>
+  
+    {% for element in table %}
+        <tr>
+        {% for key in element %}
+            <td>{{element[key]}}</td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+  
+</table>
+<br>
+<br>
+{% endfor %}
+
+</body>
+</html>
+

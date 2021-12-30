@@ -54,10 +54,13 @@ def fill_db(name, email=None, password=None):
 
     # create a new user with the form data.
     # Hash the password so the plaintext version isn't saved.
+    # new_user = User(email=email,
+    #                 username=name,
+    #                 password=generate_password_hash(
+    #                     password, method='sha256'))
     new_user = User(email=email,
                     username=name,
-                    password=generate_password_hash(
-                        password, method='sha256'))
+                    password=password)
 
     add_db(new_user, "User {}".format(new_user.username))
 

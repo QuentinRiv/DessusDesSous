@@ -28,8 +28,8 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def __unicode__(self):
-        return "[%s]" % ('->'.join('%s=%s' % (k, self.__dict__[k]) for k in sorted(self.__dict__) if '_sa_' != k[:4]))
+    def content(self):
+        return {k: self.__dict__[k] for k in sorted(self.__dict__) if '_sa_' != k[:4]}
 
 
 class Category(db.Model):
@@ -56,8 +56,9 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category %r>' % self.category_name
 
-    def __unicode__(self):
-        return "[%s]" % ('->'.join('%s=%s' % (k, self.__dict__[k]) for k in sorted(self.__dict__) if '_sa_' != k[:4]))
+    def content(self):
+        return {k: self.__dict__[k] for k in sorted(self.__dict__) if '_sa_' != k[:4]}
+
 
 
 class Transaction(db.Model):
@@ -80,5 +81,5 @@ class Transaction(db.Model):
     def __repr__(self):
         return '<Transaction %r>' % self.category
 
-    def __unicode__(self):
-        return "[%s]" % ('->'.join('%s=%s' % (k, self.__dict__[k]) for k in sorted(self.__dict__) if '_sa_' != k[:4]))
+    def content(self):
+        return {k: self.__dict__[k] for k in sorted(self.__dict__) if '_sa_' != k[:4]}
