@@ -26,11 +26,9 @@ tr:nth-child(even) {
 {% for table in all %}
 <table>
   <tr>
-    {% for element in table %}
-        {% for key in element %}
+        {% for key in table[0] %}
             <th>{{key}}</th>
         {% endfor %}
-    {% endfor %}
   </tr>
   
     {% for element in table %}

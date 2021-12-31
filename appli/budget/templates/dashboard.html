@@ -23,7 +23,7 @@
       <div class="app-header"> 
         <label class="pig-emoji"> <span>&#128022;</span></label>
         <div class="app-header-left"> 
-          <h1 class="center">0$</h1>
+          <h1 id="piggymoney" class="center">0$</h1>
         </div> 
         <div class="app-header-right">
           <button class="mode-switch" title="Switch Theme">
@@ -117,12 +117,16 @@
               return response.json();
             }).then(function (data) {
               console.log(data);
+              var totalamount = 0;
               $.each(data, function (keystr, val) {
                 console.log(keystr);
                 console.log(val);
-                var newRowContent = $("<tr><td style='height: 23.5px; '><input type='checkbox' /></td><td>" + keystr + "</td><td>" + val['spent'] + "</td><td>"+ val['assigned'] +"</td><td>" + val['left'] + "</td></tr>");
+                var newRowContent = $("<tr><td style='height: 23.5px; '><input type='checkbox' /></td><td>" + keystr + "</td><td>" + val['spent'] + "</td><td>"+ val['assigned'] +"</td><td>" + val['available'] + "</td></tr>");
                 newRowContent.insertBefore("#newcat");
+                totalamount += val['assigned'];
+                console.log(totalamount);
               });
+              $("#piggymoney").text(totalamount.toString());
               
             });
           }
@@ -184,14 +188,14 @@
           <p>Move Money</p>
         </div>
         <div class="messages" class="side-input">
-          <form data-type="text" id="login-form">
+          <!-- <form data-type="text" id="login-form"> -->
 
           <div class="side-content-row">
             <div class="from">
               <label class="label"> From : </label>
               <label class="emoji"> <span>&#128075;</span></label>
               <div class="input">
-                <input list="browsers" name="browser" class="user-input">
+                <input id="move_origin" list="browsers" name="browser" class="user-input">
                 <datalist id="browsers">
                   <option value="Water">
                   <option value="Other">
@@ -207,7 +211,7 @@
               <label class="label"> To : </label>
               <label class="emoji"> <span>&#128513;</span></label>
               <div class="input">
-                <input list="browsers" name="browser" class="user-input">
+                <input id="move_recipient" list="browsers" name="browser" class="user-input">
                 <datalist id="browsers">
                   <option value="Water">
                   <option value="Other">
@@ -223,7 +227,7 @@
               <label class="label"> Amount : </label>
               <label class="emoji"> <span>&#128184;</span></label>
               <div class="input">
-                <input list="browsers" name="browser" class="user-input">
+                <input id="move_amount" list="browsers" name="browser" class="user-input">
               </div>
             </div>
           </div>
@@ -231,17 +235,16 @@
           <div class="side-content-row">
             <div class="personal_note">
               <label class="label"> Personal note </label>
-              <textarea class="user-input" rows="6" cols="30">
+              <textarea id="move_comment" class="user-input" rows="6" cols="30">
               </textarea>
           </div>
 
           <div class="side-content-row">
             <div class = "center">
-              <input class = btn >
+              <button class="btn" onClick="moving()">Send</button>
             </div>
           </div>
 
-          </form>
         </div>
 
       </div>
@@ -303,12 +306,11 @@
 
       <div class="side-content-row">
         <div class = "center">
-          <button class="btn" onClick="spending()">Send</button> 
+          <button class="btn" onClick="spending()">Send</button>
             <!-- <input class = btn type="submit"></a> -->
         </div>
       </div>
 
-      </form>
     </div>
 
   </div>
@@ -370,6 +372,32 @@
       .then(function (res) { return res.json(); })
       .then(function (data) { alert(JSON.stringify(data)) })
   }
+
+  function moving() {
+      var origin = $("#move_origin").val();
+      var recipient = $("#move_recipient").val();
+      var amount = $("#move_amount").val();
+      var comment = $("#move_comment").val();
+      
+      
+  
+      data = {'origin': origin, 'recipient': recipient, 'amount': amount, "comment": comment};
+      console.log(data)
+  
+      // So you just choose a url name here for where to post your data
+      fetch('/move_money', {
+          method: "POST",
+          credentials: "include",
+          xhrFields: { withCredentials: true },
+          body: JSON.stringify(data),
+          cache: "no-cache",
+          headers: new Headers({
+              "content-type": "application/json"
+          })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) { alert(JSON.stringify(data)) })
+  }
   
   </SCRIPT>
 
@@ -389,13 +417,12 @@
     </div>
     <div class="messages" class="side-input">
 
-      <!-- <form data-type="text" id="fadd_money"> -->
         <div class="side-content-row">
           <div class="from">
             <label class="label"> Type of income : </label>
             <label class="emoji"> <span>&#128075;</span></label>
             <div class="input">
-              <input list="browsers" id="add_category" name="type" class="user-input">
+              <input list="browsers" id="add_type" name="type" class="user-input">
               <datalist id="browsers">
                 <option value="One time">
                 <option value="Monthy">
@@ -420,7 +447,7 @@
             <label class="label"> Assign to : </label>
             <label class="emoji"> <span>&#128075;</span></label>
             <div class="input" >
-              <input list="browsers" id="add_to" name="recipient" class="user-input">
+              <input list="browsers" id="add_category" name="recipient" class="user-input">
               <datalist id="browsers">
                 <option value="Category 1">
                 <option value="Category 2">
@@ -442,7 +469,6 @@
             <button class="btn" onClick="adding_money()">Send</button>
           </div>
         </div>
-      <!-- </form> -->
     </div>
 
   </div>

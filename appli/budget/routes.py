@@ -58,20 +58,67 @@ def update_cat(recipient, amount, origin=None):
 def add_money():
     req = request.get_json()
     print(req)
-    newdep = Transaction(
-        req['amount'], req['category'], req['comment'])
+    newdep = Transaction(amount=req['amount'],
+                         category=req['category'],
+                         comment=req['comment'])
     add_db(newdep, "Transaction in {}".format(newdep.category))
+
+    category = Category.query.filter_by(name=req['category']).first()
+    if not category:
+        print("\nNo category found !")
+        return {"Answer ": "Problem"}, 500
+
+    category.assigned += int(req['amount'])
+    category.available = category.assigned - category.spent
+    db.session.commit()
+    print("Updated !")
     return {"Answer " : "Alright"}, 200
 
+
+@budget_bp.route("/move_money", methods=["POST"])
+def move_money():
+    req = request.get_json()
+    print(req)
+    newdep = Transaction(amount=req['amount'],
+                         category=req['origin'],
+                         comment=req['comment'])
+    add_db(newdep, "Transaction in {}".format(newdep.category))
+
+    cat_orig = Category.query.filter_by(name=req['origin']).first()
+    if not cat_orig:
+        print("\nNo category found !")
+        return {"Answer ": "Problem"}, 500    
+    cat_recip = Category.query.filter_by(name=req['recipient']).first()
+    if not cat_orig:
+        print("\nNo category found !")
+        return {"Answer ": "Problem"}, 500
+
+    cat_recip.assigned += int(req['amount'])
+    cat_recip.available = cat_recip.assigned - cat_recip.spent
+
+    cat_orig.assigned -= int(req['amount'])
+    cat_orig.available = cat_orig.assigned - cat_orig.spent
+    db.session.commit()
+    print("Updated !")
+    return {"Answer ": "Alright"}, 200
 
 @budget_bp.route("/spend_money", methods=["POST"])
 def spend_money():
     req = request.get_json()
     print(req)
     newdep = Transaction(
-        req['amount'], req['category'], req['comment'])
-    db.session.add(newdep)
+        int(req['amount']), req['category'], req['comment'])
+    add_db(newdep, "Spending from {}".format(newdep.category))
+
+    category = Category.query.filter_by(name=req['category']).first()
+    if not category:
+        print("\nNo category found !")
+        return {"Answer ": "Problem"}, 500
+    
+    category.spent += int(req['amount'])
+    category.available = category.assigned - category.spent
     db.session.commit()
+    print("Updated !")
     return {"Answer ": "Alright"}, 200
 
 @budget_bp.route("/getdata")
