@@ -70,14 +70,21 @@
         <div class="projects-section">
           <div class="table-section">
           <table id="maintable">
-            <tbody >
-              <tr style="height: 23.5px;">
+            <tbody>
+              <tr style="height: 23.5px;" id="headtable">
                 <td style="height: 23.5px;"><input type="checkbox" /></td>
                 <td style="height: 23.5px;"><strong>Category&nbsp;</strong></td>
                 <td style="height: 23.5px;"><strong>Spent&nbsp;</strong></td>
                 <td style="height: 23.5px;"><strong>Assigned&nbsp;</strong></td>
                 <td style="height: 23.5px;"><strong>Left&nbsp;</strong></td>
               </tr>
+
+              <tr style="height: 23.5px;" id="newcat">
+                <td style="height: 23.5px;"><button onClick="newcat()">+</button></td>
+                <td style="height: 23.5px;"><strong><input type="text" id="ncat"></strong></td>
+                <td style="height: 23.5px;"><strong><input type="text" id="nspent"></strong></td>
+                <td style="height: 23.5px;"><strong><input type="text" id="nassigned"></strong></td>
+              </tr> 
 
           </table>
         </div>
@@ -112,14 +119,40 @@
               console.log(data);
               $.each(data, function (keystr, val) {
                 console.log(keystr);
-                var newRowContent = "<tr><td style='height: 23.5px; '><input type='checkbox' /></td><td>" + keystr + "</td><td>" + val + "</td><td>Assigned</td><td>Left</td></tr>";
-                $("#maintable tbody").append(newRowContent);
+                console.log(val);
+                var newRowContent = $("<tr><td style='height: 23.5px; '><input type='checkbox' /></td><td>" + keystr + "</td><td>" + val['spent'] + "</td><td>"+ val['assigned'] +"</td><td>" + val['left'] + "</td></tr>");
+                newRowContent.insertBefore("#newcat");
               });
               
             });
           }
 
         show();
+
+        function newcat() {
+          var category = $("#ncat").val();
+          var spent = $("#nspent").val();
+          var assigned = $("#nassigned").val();
+
+
+
+          data = { 'category': category, 'spent': spent, 'assigned': assigned};
+          console.log(data)
+
+          // So you just choose a url name here for where to post your data
+          fetch('/create_cat', {
+            method: "POST",
+            credentials: "include",
+            xhrFields: { withCredentials: true },
+            body: JSON.stringify(data),
+            cache: "no-cache",
+            headers: new Headers({
+              "content-type": "application/json"
+            })
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (data) { alert(JSON.stringify(data)) })
+        }
         </script>
 
 
@@ -234,11 +267,11 @@
 
       <div class="side-content-row">
         <div class="from">
-          <label class="label"> To: </label>
+          <label class="label"> Category: </label>
           <label class="emoji"> <span>&#128075;</span></label>
           <div class="input">
-            <input list="browsers" name="browser" class="user-input">
-            <datalist id="browsers_spend_to">
+            <input id="spend_category" list="browsers" name="browser" class="user-input">
+            <datalist id="browsers_spend_category">
               <option value="One time">
               <option value="Monthy">
               <option value="Weekly">
@@ -252,9 +285,7 @@
           <label class="label"> Amount : </label>
           <label class="emoji"> <span>&#128184;</span></label>
           <div class="input">
-            <form action="/addentry" method="POST" data-type="text" id="login-form">
-              <input name="montant" type="text" id="montant" placeholder="Montant">
-            </form>
+            <input id="spend_amount" name="montant" type="text" id="montant" placeholder="Montant">
           </div>
         </div>
       </div>
@@ -266,14 +297,13 @@
           <label class="label"> Personal note </label>
           <br>
           <br>
-          <textarea class="user-input" rows="6" cols="30">
+          <textarea id="spend_comment" class="user-input" rows="6" cols="30">
           </textarea>
       </div>
 
       <div class="side-content-row">
         <div class = "center">
-          <a href="/dashboard_with_stuff"><button href="/dashboard_with_stuff">See DB</button></a></br>
-          <button onClick="hello()">Send</button> 
+          <button class="btn" onClick="spending()">Send</button> 
             <!-- <input class = btn type="submit"></a> -->
         </div>
       </div>
@@ -288,7 +318,33 @@
 <SCRIPT language="JavaScript">
 
 
-  function adding_money() {
+  function spending() {
+      var category = $("#spend_category").val();
+      console.log(category);
+      var amount = $("#spend_amount").val();
+      var comment = $("#spend_comment").val();
+      
+      
+  
+      data = {'category': category, 'amount': amount, "comment": comment};
+      console.log(data)
+  
+      // So you just choose a url name here for where to post your data
+      fetch('/spend_money', {
+          method: "POST",
+          credentials: "include",
+          xhrFields: { withCredentials: true },
+          body: JSON.stringify(data),
+          cache: "no-cache",
+          headers: new Headers({
+              "content-type": "application/json"
+          })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) { alert(JSON.stringify(data)) })
+  }
+
+    function adding_money() {
       var category = $("#add_category").val();
       console.log(category);
       var amount = $("#add_amount").val();

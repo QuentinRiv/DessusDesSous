@@ -35,26 +35,25 @@ class User(db.Model, UserMixin):
 class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
-    category_name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), nullable=False)
-    amount_assigned = db.Column(db.Integer)
-    amount_spent = db.Column(db.Integer)
-    amount_available = db.Column(db.Integer)
+    assigned = db.Column(db.Integer)
+    spent = db.Column(db.Integer)
+    available = db.Column(db.Integer)
 
 
 
-    def __init__(self, id, category_name, username=None, amount_assigned=None,
-                 amount_spent=None, amount_available=None):
-        self.id = id
-        self.category_name = category_name
+    def __init__(self, name, username=None, assigned=300,
+                 spent=0, available=300):
+        self.name = name
         self.username = username
-        self.amount_assigned = amount_assigned
-        self.amount_spent = amount_spent
-        self.amount_available = amount_available
+        self.assigned = assigned
+        self.spent = spent
+        self.available = available
 
 
     def __repr__(self):
-        return '<Category %r>' % self.category_name
+        return '<Category %r>' % self.name
 
     def content(self):
         return {k: self.__dict__[k] for k in sorted(self.__dict__) if '_sa_' != k[:4]}
