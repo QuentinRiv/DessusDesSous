@@ -136,10 +136,6 @@ def signup_post():
     return redirect(url_for('login_bp.home'))
 
 
-@login_bp.route("/login")
-def home():
-    return render_template("home.html")
-
 
 @login_bp.route("/")
 def init():
